@@ -20,6 +20,15 @@ async function refresh() {
     $('authCard').style.display = 'none';
     $('dash').style.display = 'block';
     $('logoutBtn').style.display = '';
+    // Profile card
+    const em = ME.email || '';
+    $('pAvatar').textContent = em.charAt(0).toUpperCase() || '?';
+    $('pEmail').textContent = em;
+    const planName = ME.plan ? d.plans[ME.plan].name : null;
+    $('pStatus').innerHTML = planName
+      ? `<span class="badge-ok">✅ ${planName} Active</span>`
+      : `<span class="badge-warn">⚠️ Koi plan active nahi</span>`;
+    $('logoutBtn2').style.display = '';
     $('stPlan').textContent = ME.plan ? d.plans[ME.plan].name : 'Koi nahi';
     $('stValid').textContent = ME.paid_until || '—';
     $('stBlog').textContent = ME.bloggerConnected ? '✅ Connected' : '❌ Nahi';
@@ -63,6 +72,7 @@ $('signupBtn').onclick = async () => {
   r.ok ? location.reload() : msg('authMsg', r.error || 'error', false);
 };
 $('logoutBtn').onclick = async () => { await api('/api/logout'); location.href='index.html'; };
+$('logoutBtn2') && ($('logoutBtn2').onclick = async () => { await api('/api/logout'); location.href='index.html'; });
 
 $('payBtn').onclick = async () => {
   const plan = $('planSel').value;
