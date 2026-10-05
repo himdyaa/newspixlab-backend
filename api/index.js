@@ -22,7 +22,7 @@ const PLANS = {
   starter:  { name: 'Plan 1', price: 250000, per: 'mahina', categories: 5, newsPerDay: 3 },
   growth:   { name: 'Plan 2', price: 320000, per: 'mahina', categories: 5, newsPerDay: 5 },
   pro:      { name: 'Plan 3', price: 400000, per: 'mahina', categories: 7, newsPerDay: 7 },
-  ultimate: { name: 'Plan 4', price: 500000, per: 'mahina', categories: 8, newsPerDay: 7, customNews: true },
+  ultimate: { name: 'Plan 4', price: 500000, per: 'mahina', categories: 8, newsPerDay: 7, customNews: true, flexCats: true },
 };
 
 /* ---------- Razorpay ---------- */

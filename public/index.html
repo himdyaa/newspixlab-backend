@@ -63,9 +63,9 @@ fetch('/api/me').then(r=>r.json()).then(d=>{
    `<div class="plan${k==='growth'?' hot':''}">${k==='growth'?'<div class="tag">LOKPIRYA</div>':''}
     <h3>${p.name}</h3><div class="price">₹${(p.price/100).toLocaleString('en-IN')}</div>
     <div class="per">prati ${p.per}</div>
-    <ul><li><b>${p.categories}</b> categor${p.categories>1?'ies':'y'}</li>
+    <ul><li><b>${p.flexCats?'Aapki pasand':p.categories}</b> categor${p.flexCats?'ies':(p.categories>1?'ies':'y')}</li>
     <li><b>${p.newsPerDay} news</b> / category / roz</li>
-    <li><b>${p.categories*p.newsPerDay*30}</b> posts mahine me</li>
+    <li><b>${p.flexCats?'Aapke chune':(p.categories*p.newsPerDay*30)}</b>${p.flexCats?' hisaab se':' posts mahine me'}</li>
     <li>Verified + original content</li><li>Auto-posting aapke blog par</li>
     <li>Jitni news, utne <b>posters</b> aapke Instagram par</li>${p.customNews?'<li>Aapki di hui news bhi post hogi</li>':''}</ul>
     <a class="btn" href="dashboard.html?plan=${k}">Ye Plan Lein →</a></div>`).join('');
