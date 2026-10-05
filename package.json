@@ -1,1 +1,20 @@
-{"dependencies":{"@vercel/blob":"^0.23.4","bcryptjs":"^2.4.3","cookie-parser":"^1.4.6","dotenv":"^16.4.5","express":"^4.19.2","express-session":"^1.18.0","googleapis":"^140.0.0","jsonwebtoken":"^9.0.2","razorpay":"^2.9.4"},"description":"NewsPixLab — Blogger news posting service (plans + Razorpay + Google OAuth)","main":"server.js","name":"newspixlab-service","scripts":{"start":"node server.js"},"version":"1.0.0"}
+{
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "googleapis": "^140.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "razorpay": "^2.9.4",
+    "pg": "^8.11.0"
+  },
+  "description": "NewsPixLab \u2014 Blogger news posting service (plans + Razorpay + Google OAuth)",
+  "main": "server.js",
+  "name": "newspixlab-service",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "version": "1.0.0"
+}
