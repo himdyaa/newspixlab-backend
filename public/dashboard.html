@@ -6,6 +6,51 @@
 <title>Dashboard — NewsPixLab</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+/* Dashboard-specific improvements */
+.dash-head { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin:28px 0 18px; }
+.dash-head h2 { margin:0; font-size:26px; }
+.dash-head .sub { color:var(--mut); font-size:14px; margin-top:4px; }
+
+.status-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:26px; }
+.stat-card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 16px; text-align:center; transition:transform .15s; }
+.stat-card:hover { transform:translateY(-2px); }
+.stat-card .icon { font-size:26px; margin-bottom:8px; }
+.stat-card .k { font-size:12px; color:var(--mut); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+.stat-card .v { font-size:17px; font-weight:700; }
+.stat-card .v.ok { color:#22c55e; }
+.stat-card .v.warn { color:#f59e0b; }
+
+.step-card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:28px; margin-bottom:22px; }
+.step-card .step-num { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; background:var(--red); color:#fff; font-weight:800; border-radius:50%; font-size:16px; margin-right:12px; }
+.step-card h2 { display:flex; align-items:center; margin:0 0 6px; font-size:20px; }
+.step-card .step-desc { color:var(--mut); font-size:14px; margin:0 0 20px 48px; }
+.step-card.done { border-color:#22c55e; }
+.step-card.done .step-num { background:#22c55e; }
+
+.cat-grid { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
+.cat { padding:10px 18px; border:2px solid var(--line); border-radius:24px; cursor:pointer; font-size:14px; font-weight:600; transition:all .15s; user-select:none; }
+.cat:hover { border-color:var(--red); }
+.cat.on { background:var(--red); border-color:var(--red); color:#fff; }
+.cat.disabled { opacity:.35; cursor:not-allowed; }
+.cathint { width:100%; font-size:13px; color:var(--mut); margin-top:8px; }
+
+.auth-box { max-width:440px; margin:40px auto; }
+.auth-box .card { padding:32px; }
+.auth-tabs { display:flex; gap:8px; margin-bottom:20px; }
+.auth-tabs button { flex:1; padding:12px; border:2px solid var(--line); background:transparent; border-radius:10px; font-weight:700; cursor:pointer; color:var(--mut); }
+.auth-tabs button.active { border-color:var(--red); color:var(--red); }
+
+.g-btn { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:14px; background:#fff; color:#1a1a1a; border:none; border-radius:10px; font-weight:700; font-size:15px; cursor:pointer; text-decoration:none; }
+.g-btn:hover { background:#f0f0f0; }
+.secure-note { display:flex; align-items:center; gap:8px; justify-content:center; margin-top:14px; font-size:13px; color:var(--mut); }
+
+@media(max-width:768px) {
+  .status-grid { grid-template-columns:repeat(2,1fr); }
+  .step-card { padding:20px; }
+  .step-card .step-desc { margin-left:0; }
+}
+</style>
 </head>
 <body>
 <header class="top"><div class="wrap nav">
@@ -14,45 +59,105 @@
 </div></header>
 
 <div class="wrap">
+
 <!-- LOGIN/SIGNUP -->
-<div class="card" id="authCard">
-<h2>Login / Signup</h2>
+<div class="auth-box" id="authCard">
+<div class="card">
+<h2 style="text-align:center;margin-bottom:6px">Welcome Back</h2>
+<p style="text-align:center;color:var(--mut);font-size:14px;margin-bottom:20px">Login karein ya naya account banayein</p>
+<div class="auth-tabs">
+<button id="tabLogin" class="active" onclick="switchTab('login')">Login</button>
+<button id="tabSignup" onclick="switchTab('signup')">Signup</button>
+</div>
 <div class="field"><label>Email</label><input id="email" type="email" placeholder="aap@email.com"></div>
 <div class="field"><label>Password (6+ akshar)</label><input id="pass" type="password" placeholder="••••••"></div>
-<div class="row"><button class="btn" id="loginBtn">Login</button><button class="btn ghost" id="signupBtn">Signup</button></div>
+<div class="row" style="margin-top:8px">
+<button class="btn" id="loginBtn" style="flex:1">Login →</button>
+<button class="btn ghost" id="signupBtn" style="flex:1;display:none">Account Banayein</button>
+</div>
 <div class="msg" id="authMsg"></div>
+</div>
 </div>
 
 <!-- DASHBOARD -->
 <div id="dash" style="display:none">
-<h2 class="sec" style="margin-top:30px">Aapka Dashboard</h2>
-<div class="status">
-<div class="stat"><div class="k">Plan</div><div class="v" id="stPlan">—</div></div>
-<div class="stat"><div class="k">Valid Till</div><div class="v" id="stValid">—</div></div>
-<div class="stat"><div class="k">Blogger</div><div class="v" id="stBlog">—</div></div>
-<div class="stat"><div class="k">Roz ki News</div><div class="v" id="stNews">—</div></div>
+
+<div class="dash-head">
+<div>
+<h2>📊 Aapka Dashboard</h2>
+<div class="sub">Yahan se apna plan aur blog manage karein</div>
+</div>
 </div>
 
-<div class="card" id="planCard">
-<h2>1️⃣ Plan Lein</h2>
-<div class="field"><label>Plan chunein</label><select id="planSel"></select></div>
-<div class="field"><label>Categories chunein (plan ke hisaab se)</label><div class="cats" id="catPick"></div></div>
-<button class="btn gold" id="payBtn" style="width:100%">💳 Payment Karein</button>
-<div style="text-align:center;margin:10px 0;color:var(--mut);font-size:13px">— ya —</div>
-<button class="btn" id="trialBtn" style="width:100%">🎁 Free Trial (7 din, bina payment)</button>
+<!-- STATUS CARDS -->
+<div class="status-grid">
+<div class="stat-card">
+<div class="icon">📦</div>
+<div class="k">Current Plan</div>
+<div class="v" id="stPlan">—</div>
+</div>
+<div class="stat-card">
+<div class="icon">📅</div>
+<div class="k">Valid Till</div>
+<div class="v" id="stValid">—</div>
+</div>
+<div class="stat-card">
+<div class="icon">🔗</div>
+<div class="k">Blogger Status</div>
+<div class="v" id="stBlog">—</div>
+</div>
+<div class="stat-card">
+<div class="icon">📰</div>
+<div class="k">Roz ki News</div>
+<div class="v" id="stNews">—</div>
+</div>
+</div>
+
+<!-- STEP 1: PLAN -->
+<div class="step-card" id="planCard">
+<h2><span class="step-num">1</span> Plan Chunein</h2>
+<p class="step-desc">Apni zaroorat ke hisaab se plan select karein</p>
+<div class="field"><label>Available Plans</label><select id="planSel"></select></div>
+<div class="field"><label>News Categories <span style="color:var(--mut);font-weight:400">(plan ke hisaab se limit)</span></label>
+<div class="cat-grid" id="catPick"></div>
+</div>
+<button class="btn gold" id="payBtn" style="width:100%;margin-top:16px">💳 Payment Karein</button>
+<div style="text-align:center;margin:14px 0;color:var(--mut);font-size:13px">— ya —</div>
+<button class="btn" id="trialBtn" style="width:100%">🎁 Free Trial Shuru Karein <span style="font-weight:400;font-size:13px">(7 din, bina payment)</span></button>
 <div class="msg" id="payMsg"></div>
 </div>
 
-<div class="card" id="blogCard" style="display:none">
-<h2>2️⃣ Blogger Connect Karein</h2>
-<p style="color:var(--mut);font-size:14px;text-align:center;margin-bottom:16px">Google ke official page par login karke <b>sirf Blogger ki permission</b> dein.<br><b>Password hamse kabhi share nahi hota.</b></p>
-<a class="btn" id="gBtn" href="/auth/google" style="width:100%;text-align:center">🔗 Connect with Google</a>
+<!-- STEP 2: BLOGGER -->
+<div class="step-card" id="blogCard" style="display:none">
+<h2><span class="step-num">2</span> Blogger Connect Karein</h2>
+<p class="step-desc">Google se connect karke apna blog link karein</p>
+<div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:14px;margin-bottom:18px">
+<div style="font-size:14px;line-height:1.6">
+🔒 <b>100% Safe:</b> Google ke official page par login hoga<br>
+✅ Sirf <b>Blogger ki permission</b> mangi jayegi<br>
+🚫 <b>Aapka password hamse kabhi share nahi hota</b>
+</div>
+</div>
+<a class="g-btn" id="gBtn" href="/auth/google">
+<svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+Connect with Google
+</a>
+<div class="secure-note">🔐 OAuth 2.0 Secure Connection</div>
 <div class="msg" id="blogMsg"></div>
 </div>
+
 </div>
 </div>
 
-<footer>© 2026 <b>NewsPixLab</b> • All Rights Reserved</footer>
+<footer>© 2026 <b>NewsPixLab</b> • Blogger News Posting Service • All Rights Reserved</footer>
+<script>
+function switchTab(t) {
+  document.getElementById('tabLogin').classList.toggle('active', t==='login');
+  document.getElementById('tabSignup').classList.toggle('active', t==='signup');
+  document.getElementById('loginBtn').style.display = t==='login' ? '' : 'none';
+  document.getElementById('signupBtn').style.display = t==='signup' ? '' : 'none';
+}
+</script>
 <script src="app.js"></script>
 </body>
 </html>
