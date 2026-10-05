@@ -45,7 +45,13 @@ const BLOGGER_SCOPE = 'https://www.googleapis.com/auth/blogger';
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '..', 'public')));
+// Static files: Vercel serves public/ natively in production.
+// express.static only for local dev (not in Vercel function bundle).
+if (!process.env.VERCEL) {
+  app.use(express.static(path.join(__dirname, '..', 'public')));
+}
+// Root: redirect to static index.html (served by Vercel CDN)
+app.get('/', (req, res) => res.redirect('/index.html'));
 
 function setAuthCookie(res, userId) {
   const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7d' });
