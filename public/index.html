@@ -66,7 +66,8 @@ fetch('/api/me').then(r=>r.json()).then(d=>{
     <ul><li><b>${p.categories}</b> categor${p.categories>1?'ies':'y'}</li>
     <li><b>${p.newsPerDay} news</b> / category / roz</li>
     <li><b>${p.categories*p.newsPerDay*30}</b> posts mahine me</li>
-    <li>Verified + original content</li><li>Auto-posting aapke blog par</li></ul>
+    <li>Verified + original content</li><li>Auto-posting aapke blog par</li>
+    <li>Jitni news, utne <b>posters</b> aapke Instagram par</li>${p.customNews?'<li>Aapki di hui news bhi post hogi</li>':''}</ul>
     <a class="btn" href="dashboard.html?plan=${k}">Ye Plan Lein →</a></div>`).join('');
 }).catch(()=>{});
 </script>
