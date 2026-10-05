@@ -35,17 +35,24 @@ async function refresh() {
   } catch(e) {}
 }
 let picked = [];
+function planMaxCats() {
+  const plan = $('planSel') ? $('planSel').value : 'starter';
+  return { starter:5, growth:5, pro:7, ultimate:8 }[plan] || 5;
+}
 function renderCats() {
-  const max = 10;
+  const max = planMaxCats();
+  if (picked.length > max) picked = picked.slice(0, max);
   $('catPick').innerHTML = CATS.map(c =>
-    `<span class="cat${picked.includes(c)?' on':''}" data-c="${c}">${c}</span>`).join('');
+    `<span class="cat${picked.includes(c)?' on':''}" data-c="${c}">${c}</span>`).join('')
+    + `<div class="cathint">${picked.length}/${max} categories chuni</div>`;
   document.querySelectorAll('.cat').forEach(el => el.onclick = () => {
     const c = el.dataset.c;
-    picked = picked.includes(c) ? picked.filter(x=>x!==c) : (picked.length < max ? [...picked, c] : picked);
+    const lim = planMaxCats();
+    picked = picked.includes(c) ? picked.filter(x=>x!==c) : (picked.length < lim ? [...picked, c] : picked);
     renderCats();
   });
 }
-$('planSel') && ($('planSel').onchange = () => {});
+$('planSel') && ($('planSel').onchange = () => { renderCats(); });
 
 $('loginBtn').onclick = async () => {
   const r = await api('/api/login', { email: $('email').value, password: $('pass').value });
