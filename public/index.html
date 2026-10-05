@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NewsPixLab — Apne Blogger Blog Par Roz Taaza News, Bina Mehnat</title>
+<meta name="description" content="NewsPixLab: aapke Blogger blog ke liye roz verified news posts — category-wise, automatic. Plan chunein, payment karein, Blogger connect karein.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><div class="wrap nav">
+<div class="logo"><b>News</b>Pix<span>Lab</span></div>
+<div><a class="btn ghost" href="dashboard.html">Login</a><a class="btn" href="#plans">Plan Lein</a></div>
+</div></header>
+
+<div class="wrap hero">
+<h1>Apne <em>Blogger Blog</em> Par Roz Taaza News — <em>Bina Ungli Uthaye</em></h1>
+<p>NewsPixLab aapke blog ke liye <b>roz verified, original Hindi news posts</b> taiyaar karke publish karta hai — category-wise, poori tarah automatic.</p>
+<div class="badges">
+<span class="badge"><b>4</b> news / category / roz</span>
+<span class="badge">100% <b>original</b> content</span>
+<span class="badge"><b>2+ sources</b> se verified</span>
+<span class="badge">Blogger <b>auto-posting</b></span>
+</div>
+<a class="btn gold" href="#plans" style="font-size:18px;padding:14px 40px">Apna Plan Chunein →</a>
+</div>
+
+<div class="wrap"><section>
+<h2 class="sec">Kaise Kaam Karta Hai?</h2>
+<p class="sub">Sirf 5 step — uske baad sab automatic</p>
+<div class="steps">
+<div class="step"><div class="n">1</div><h3>Account Banayein</h3><p>Email se free me signup karein.</p></div>
+<div class="step"><div class="n">2</div><h3>Plan Chunein</h3><p>Apne blog ke hisaab se category plan lein.</p></div>
+<div class="step"><div class="n">3</div><h3>Payment Karein</h3><p>Razorpay se secure payment — UPI, card, netbanking.</p></div>
+<div class="step"><div class="n">4</div><h3>Blogger Connect</h3><p><b>"Connect with Google"</b> button dabayein — <b>password kabhi nahi manga jata</b>, sirf Blogger ki permission milti hai.</p></div>
+<div class="step"><div class="n">5</div><h3>Roz News Payein</h3><p>Hamari team roz aapke blog par verified news publish karegi.</p></div>
+</div>
+</section></div>
+
+<div class="wrap"><section id="plans">
+<h2 class="sec">Plans</h2>
+<p class="sub">Har plan me <b>4 news / category / roz</b> — 30 din ke liye</p>
+<div class="plans" id="planCards"></div>
+<p class="sub" style="margin-top:18px;font-size:13px">* Ye shuruaati prices hain — final pricing launch par confirm hogi.</p>
+</section></div>
+
+<div class="wrap"><section>
+<h2 class="sec">Aksar Puche Jaane Wale Sawaal</h2>
+<div class="faq">
+<details><summary>Kya mujhe apna Google password dena hoga?</summary><p><b>Bilkul nahi.</b> Aap Google ke official "Sign in" page par khud login karke sirf Blogger ki permission dete hain. Aapka password hamein kabhi dikhta hi nahi.</p></details>
+<details><summary>News kahan se aati hai? Copy to nahi hogi?</summary><p>Har khabar kam se kam <b>2 bharosemand sources</b> se verify karke, <b>apne shabdon me</b> likhi jaati hai. Copy-paste bilkul nahi hota.</p></details>
+<details><summary>Kaun si categories milengi?</summary><p>Desh, Videsh, Pradesh, Khel, Manoranjan, Technology, Business, Dharm-Astha — apne plan ke hisaab se chunein.</p></details>
+<details><summary>Payment kaise hogi? Safe hai?</summary><p><b>Razorpay</b> (Bharat ka sabse bharosemand gateway) se — UPI, card, netbanking. Payment server par verify hone ke baad hi plan active hota hai.</p></details>
+<details><summary>Plan beech me cancel kar sakta hun?</summary><p>Haan, kabhi bhi. Agle mahine se charge nahi hoga; chalu mahine ki service poori milegi.</p></details>
+</div>
+</section></div>
+
+<footer>© 2026 <b>NewsPixLab</b> • Blogger News Posting Service • All Rights Reserved</footer>
+<script>
+fetch('/api/me').then(r=>r.json()).then(d=>{
+  const el=document.getElementById('planCards');
+  el.innerHTML=Object.entries(d.plans||{}).map(([k,p],i)=>
+   `<div class="plan${k==='growth'?' hot':''}">${k==='growth'?'<div class="tag">LOKPIRYA</div>':''}
+    <h3>${p.name}</h3><div class="price">₹${(p.price/100).toLocaleString('en-IN')}</div>
+    <div class="per">prati ${p.per}</div>
+    <ul><li><b>${p.categories}</b> categor${p.categories>1?'ies':'y'}</li>
+    <li><b>${p.newsPerDay} news</b> / category / roz</li>
+    <li><b>${p.categories*p.newsPerDay*30}</b> posts mahine me</li>
+    <li>Verified + original content</li><li>Auto-posting aapke blog par</li></ul>
+    <a class="btn" href="dashboard.html?plan=${k}">Ye Plan Lein →</a></div>`).join('');
+}).catch(()=>{});
+</script>
+</body>
+</html>

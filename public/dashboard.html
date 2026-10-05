@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — NewsPixLab</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+<header class="top"><div class="wrap nav">
+<div class="logo"><b>News</b>Pix<span>Lab</span></div>
+<div><a class="btn ghost" href="index.html">Home</a><button class="btn ghost" id="logoutBtn" style="display:none">Logout</button></div>
+</div></header>
+
+<div class="wrap">
+<!-- LOGIN/SIGNUP -->
+<div class="card" id="authCard">
+<h2>Login / Signup</h2>
+<div class="field"><label>Email</label><input id="email" type="email" placeholder="aap@email.com"></div>
+<div class="field"><label>Password (6+ akshar)</label><input id="pass" type="password" placeholder="••••••"></div>
+<div class="row"><button class="btn" id="loginBtn">Login</button><button class="btn ghost" id="signupBtn">Signup</button></div>
+<div class="msg" id="authMsg"></div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dash" style="display:none">
+<h2 class="sec" style="margin-top:30px">Aapka Dashboard</h2>
+<div class="status">
+<div class="stat"><div class="k">Plan</div><div class="v" id="stPlan">—</div></div>
+<div class="stat"><div class="k">Valid Till</div><div class="v" id="stValid">—</div></div>
+<div class="stat"><div class="k">Blogger</div><div class="v" id="stBlog">—</div></div>
+<div class="stat"><div class="k">Roz ki News</div><div class="v" id="stNews">—</div></div>
+</div>
+
+<div class="card" id="planCard">
+<h2>1️⃣ Plan Lein</h2>
+<div class="field"><label>Plan chunein</label><select id="planSel"></select></div>
+<div class="field"><label>Categories chunein (plan ke hisaab se)</label><div class="cats" id="catPick"></div></div>
+<button class="btn gold" id="payBtn" style="width:100%">💳 Payment Karein</button>
+<div style="text-align:center;margin:10px 0;color:var(--mut);font-size:13px">— ya —</div>
+<button class="btn" id="trialBtn" style="width:100%">🎁 Free Trial (7 din, bina payment)</button>
+<div class="msg" id="payMsg"></div>
+</div>
+
+<div class="card" id="blogCard" style="display:none">
+<h2>2️⃣ Blogger Connect Karein</h2>
+<p style="color:var(--mut);font-size:14px;text-align:center;margin-bottom:16px">Google ke official page par login karke <b>sirf Blogger ki permission</b> dein.<br><b>Password hamse kabhi share nahi hota.</b></p>
+<a class="btn" id="gBtn" href="/auth/google" style="width:100%;text-align:center">🔗 Connect with Google</a>
+<div class="msg" id="blogMsg"></div>
+</div>
+</div>
+</div>
+
+<footer>© 2026 <b>NewsPixLab</b> • All Rights Reserved</footer>
+<script src="app.js"></script>
+</body>
+</html>

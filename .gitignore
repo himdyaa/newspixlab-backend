@@ -1,0 +1,25 @@
+# Secrets — NEVER commit these
+.env
+.env.local
+.env.*.local
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+/tmp/
+logs/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
