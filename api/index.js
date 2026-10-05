@@ -17,11 +17,11 @@ const BASE_URL = (process.env.BASE_URL ||
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
 ).replace(/\/$/, '');
 
-/* ---------- Plans (price paise me; 4 news/category/roz) ---------- */
+/* ---------- Plans (price paise me) ---------- */
 const PLANS = {
-  starter: { name: 'Starter', price: 49900,  per: 'mahina', categories: 1,  newsPerDay: 4 },
-  growth:  { name: 'Growth',  price: 99900,  per: 'mahina', categories: 3,  newsPerDay: 4 },
-  pro:     { name: 'Pro',     price: 199900, per: 'mahina', categories: 10, newsPerDay: 4 },
+  starter: { name: 'Plan 1', price: 250000, per: 'mahina', categories: 5, newsPerDay: 3 },
+  growth:  { name: 'Plan 2', price: 320000, per: 'mahina', categories: 5, newsPerDay: 5 },
+  pro:     { name: 'Plan 3', price: 400000, per: 'mahina', categories: 7, newsPerDay: 7 },
 };
 
 /* ---------- Razorpay ---------- */

@@ -59,7 +59,7 @@ $('logoutBtn').onclick = async () => { await api('/api/logout'); location.href='
 
 $('payBtn').onclick = async () => {
   const plan = $('planSel').value;
-  const maxCats = { starter:1, growth:3, pro:10 }[plan] || 1;
+  const maxCats = { starter:5, growth:5, pro:7 }[plan] || 5;
   if (!picked.length) return msg('payMsg','Pehle categories chunein',false);
   const cats = picked.slice(0, maxCats);
   msg('payMsg','Order ban raha hai…',true);
